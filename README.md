@@ -29,9 +29,6 @@ desktop and mobile.
 - Notifications: Users receive notifications when they add, or remove a movie from their watch list. Also, they receive notifications when an error occurs.
 
 
-
-.
-
 ## Commands to run the project:
 
 ### With npm:
