@@ -9,7 +9,9 @@
 - State Management: [React Context API]
 - Async Data Fetching: [Axios]
 - Authentication: [Firebase Auth]
+- Notifications: [Notistack]
 - Database: [Firebase Firestore]
+- Deployment: [Vercel]
 
 ## Features:
 - Search functionality: Users can search for movies by title, genre, or cast. 
@@ -22,6 +24,7 @@ desktop and mobile.
 - Authentication: Users can sign up and log in to access personalized.
 - Recommendations: Users can view movie recommendations based on their selected movie/series.
 - Carousel: Users can view the latest movie releases in a carousel.
+- Notifications: Users receive notifications when they add, or remove a movie from their watch list. Also, they receive notifications when an error occurs.
 
 
 
