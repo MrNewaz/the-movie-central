@@ -18,8 +18,8 @@ import Box from "@mui/material/Box"
 import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 
-import minutesToHours from "utils/helpers"
 import CastList from "../components/CastList"
+import SimilarList from "../components/SimilarList"
 import { useAuth } from "../context/useAuth"
 import {
   fetchCredits,
@@ -28,6 +28,7 @@ import {
   imagePath,
 } from "../services/api"
 import { useFirestore } from "../services/firestore"
+import minutesToHours from "../utils/minutesToHours"
 
 const Details = () => {
   const router = useParams()
@@ -265,6 +266,7 @@ const Details = () => {
           {details?.overview}
         </Typography>
         <CastList cast={cast} />
+        <SimilarList data={similar} type={type} />
       </Container>
     </Box>
   )
