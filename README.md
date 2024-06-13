@@ -1,7 +1,9 @@
-# Flight History Dashboard - ShareTrip Online Test
+# The Movie Central - TechCare Inc. Online Task
 
 ## Demo:
-- Live: https://sharetrip-online-task.vercel.app/
+- Live App: https://the-movie-central-chi.vercel.app/
+- Video(Youtube): https://www.youtube.com/watch?v=LnyFsr9SgT0
+- Video(Google Drive): https://drive.google.com/file/d/1VK6rAWZVGRki3FpvZGTbGDycLZ2VUDxP/view?usp=sharing
 
 ## Stacks Used:
 - React.js [Frontend Library]

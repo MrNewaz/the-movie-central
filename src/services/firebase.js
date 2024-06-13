@@ -5,12 +5,12 @@ import { getFirestore } from "firebase/firestore"
 
 // Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyA-AYIRP6BKq6snaQAqqkNV_R6yWmdMSM8",
-  authDomain: "techcare-firebase.firebaseapp.com",
-  projectId: "techcare-firebase",
-  storageBucket: "techcare-firebase.appspot.com",
-  messagingSenderId: "785691894450",
-  appId: "1:785691894450:web:bd058f34e4f46a3feb5fab",
+  apiKey: "AIzaSyDwGF62jOwVVsa_noeyWCuWKBkY3hEw8JU",
+  authDomain: "the-movie-central.firebaseapp.com",
+  projectId: "the-movie-central",
+  storageBucket: "the-movie-central.appspot.com",
+  messagingSenderId: "103408156885",
+  appId: "1:103408156885:web:bde5becb65a77be35a225c",
 }
 
 // Initialize Firebase
