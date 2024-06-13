@@ -1,19 +1,27 @@
 import { Button, Grid } from "@mui/material"
 import Box from "@mui/material/Box"
 import Typography from "@mui/material/Typography"
+import { useSnackbar } from "notistack"
 import { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
 import { imagePosterPath } from "../../services/api"
 import { useFirestore } from "../../services/firestore"
 
 const CommonActionCard = ({ item, user }) => {
+  const { enqueueSnackbar } = useSnackbar()
   const [isInWatchlist, setIsInWatchlist] = useState(false)
   const { checkIfInWatchlist, removeFromWatchlist } = useFirestore()
 
-  const handleRemoveFromWatchlist = async () => {
-    await removeFromWatchlist(user?.uid, item.id)
-    const isSetToWatchlist = await checkIfInWatchlist(user?.uid, item.id)
-    setIsInWatchlist(isSetToWatchlist)
+  const handleRemoveFromWatchlist = async (e) => {
+    try {
+      e.preventDefault()
+      await removeFromWatchlist(user?.uid, item.id)
+      const isSetToWatchlist = await checkIfInWatchlist(user?.uid, item.id)
+      setIsInWatchlist(isSetToWatchlist)
+      enqueueSnackbar("Removed from watchlist", { variant: "success" })
+    } catch (error) {
+      enqueueSnackbar("Error removing from watchlist", { variant: "error" })
+    }
   }
 
   useEffect(() => {

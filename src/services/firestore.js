@@ -25,7 +25,6 @@ export const useFirestore = () => {
         return false
       }
       await setDoc(doc(db, "users", userId, "watchlist", dataId), data)
-      enqueueSnackbar("Added to watchlist", { variant: "success" })
     } catch (error) {
       console.log(error, "Error adding document")
       enqueueSnackbar("Error adding to watchlist", { variant: "error" })
@@ -38,7 +37,6 @@ export const useFirestore = () => {
         return false
       }
       await setDoc(doc(db, "users", userId, "favouriteList", dataId), data)
-      enqueueSnackbar("Added to favourite list", { variant: "success" })
     } catch (error) {
       console.log(error, "Error adding document")
       enqueueSnackbar("Error adding to favourite list", { variant: "error" })
@@ -84,7 +82,6 @@ export const useFirestore = () => {
       await deleteDoc(
         doc(db, "users", userId?.toString(), "watchlist", dataId?.toString())
       )
-      enqueueSnackbar("Removed from watchlist", { variant: "success" })
     } catch (error) {
       console.log(error, "Error while deleting doc")
       enqueueSnackbar("Error removing from watchlist", { variant: "error" })
@@ -102,7 +99,6 @@ export const useFirestore = () => {
           dataId?.toString()
         )
       )
-      enqueueSnackbar("Removed from favourite list", { variant: "success" })
     } catch (error) {
       console.log(error, "Error while deleting doc")
       enqueueSnackbar("Error removing from favourite list", {
