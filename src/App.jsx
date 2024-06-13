@@ -1,12 +1,11 @@
 import { CssBaseline } from "@mui/material"
-import {
-  createTheme,
-  responsiveFontSizes,
-  ThemeProvider,
-} from "@mui/material/styles"
+
+import ThemeProvider from "@mui/material/styles/ThemeProvider"
+import createTheme from "@mui/material/styles/createTheme"
+import responsiveFontSizes from "@mui/material/styles/responsiveFontSizes"
+import AppRoutes from "./Routes"
 import Footer from "./components/Footer"
 import Navbar from "./components/Navbar"
-import AppRoutes from "./Routes"
 
 function App() {
   const theme = createTheme({
