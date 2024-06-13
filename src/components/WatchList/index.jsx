@@ -26,12 +26,14 @@ export default function WatchListComponent({ uid }) {
         setWatchlist(data)
       })
       .catch((err) => {
-        enqueueSnackbar(`Error fetching watchlist: ${err}`, { variant: "error" })
+        enqueueSnackbar(`Error fetching watchlist: ${err}`, {
+          variant: "error",
+        })
       })
       .finally(() => {
         setIsLoading(false)
       })
-  }, [uid, getWatchlist, watchlist])
+  }, [uid, getWatchlist, watchlist, enqueueSnackbar])
 
   if (watchlist.length === 0) return null
 

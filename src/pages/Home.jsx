@@ -35,7 +35,7 @@ const Home = () => {
     }
 
     fetchData()
-  }, [])
+  }, [enqueueSnackbar])
 
   const { user } = useAuth()
 

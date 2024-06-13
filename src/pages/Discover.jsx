@@ -36,7 +36,7 @@ const Discover = () => {
         })
       )
       .finally(() => setIsLoading(false))
-  }, [activePage, type])
+  }, [activePage, type, enqueueSnackbar])
 
   const handleType = (event, newType) => {
     setType(newType)
