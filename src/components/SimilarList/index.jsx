@@ -7,7 +7,7 @@ import "swiper/css/navigation"
 import "./styles.css"
 
 import { Box, Typography } from "@mui/material"
-import SimilarCard from "./SimilarCard"
+import CommonCard from "../Common/CommonCard"
 
 export default function SimilarList({ data, type }) {
   const title =
@@ -51,7 +51,7 @@ export default function SimilarList({ data, type }) {
       >
         {data.map((item) => (
           <SwiperSlide key={item.id}>
-            <SimilarCard item={item} type={type} />
+            <CommonCard item={item} type={type} />
           </SwiperSlide>
         ))}
       </Swiper>
