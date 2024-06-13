@@ -1,5 +1,6 @@
 import { CircularProgress, Container } from "@mui/material"
 import Box from "@mui/material/Box"
+import { useSnackbar } from "notistack"
 import { useEffect, useState } from "react"
 import Hero from "../components/Hero"
 import LatestMovies from "../components/LatestMovies"
@@ -9,6 +10,7 @@ import { useAuth } from "../context/useAuth"
 import { fetchLatest, fetchTrending } from "../services/api"
 
 const Home = () => {
+  const { enqueueSnackbar } = useSnackbar()
   const [trending, setTrending] = useState([])
   const [latest, setLatest] = useState([])
   const [loading, setLoading] = useState(true)
@@ -23,8 +25,10 @@ const Home = () => {
 
         setTrending(trendingData)
         setLatest(latestData)
-      } catch (error) {
-        console.log(error, "error")
+      } catch (err) {
+        enqueueSnackbar(`Error fetching watchlist: ${err}`, {
+          variant: "error",
+        })
       } finally {
         setLoading(false)
       }

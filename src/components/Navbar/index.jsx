@@ -10,6 +10,7 @@ import AppBar from "@mui/material/AppBar"
 import Container from "@mui/material/Container"
 import Toolbar from "@mui/material/Toolbar"
 
+import { useSnackbar } from "notistack"
 import { Link, NavLink } from "react-router-dom"
 import { useAuth } from "../../context/useAuth"
 import SideBar from "./SideBar"
@@ -23,6 +24,7 @@ const pages = [
 ]
 
 const Navbar = (props) => {
+  const { enqueueSnackbar } = useSnackbar()
   const { window } = props
   const trigger = useScrollTrigger({
     disableHysteresis: true,
@@ -35,9 +37,8 @@ const Navbar = (props) => {
   const handleGoogleLogin = async () => {
     try {
       await signInWithGoogle()
-      console.log("success")
     } catch (error) {
-      console.log("err", error)
+      enqueueSnackbar("Error signing in", { variant: "error" })
     }
   }
   return (

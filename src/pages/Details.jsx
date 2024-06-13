@@ -18,6 +18,7 @@ import Box from "@mui/material/Box"
 import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 
+import { useSnackbar } from "notistack"
 import CastList from "../components/CastList"
 import SimilarList from "../components/SimilarList"
 import { useAuth } from "../context/useAuth"
@@ -31,6 +32,7 @@ import { useFirestore } from "../services/firestore"
 import minutesToHours from "../utils/minutesToHours"
 
 const Details = () => {
+  const { enqueueSnackbar } = useSnackbar()
   const router = useParams()
   const { type, id } = router
 
@@ -62,18 +64,20 @@ const Details = () => {
         // Set similar
         setSimilar(similarData?.results)
       } catch (error) {
-        console.log(error, "error")
+        enqueueSnackbar("Error fetching data", { variant: "error" })
       } finally {
         setLoading(false)
       }
     }
 
     fetchData()
-  }, [type, id])
+  }, [type, id, enqueueSnackbar])
 
   const handleSaveToWatchlist = async () => {
     if (!user) {
-      console.log("Please login to add to watchlist")
+      enqueueSnackbar("Please sign in to add to watchlist", {
+        variant: "error",
+      })
       return
     }
 
@@ -88,9 +92,14 @@ const Details = () => {
     }
 
     const dataId = details?.id?.toString()
-    await addToWatchlist(user?.uid, dataId, data)
-    const isSetToWatchlist = await checkIfInWatchlist(user?.uid, dataId)
-    setIsInWatchlist(isSetToWatchlist)
+    try {
+      await addToWatchlist(user?.uid, dataId, data)
+      const isSetToWatchlist = await checkIfInWatchlist(user?.uid, dataId)
+      setIsInWatchlist(isSetToWatchlist)
+      enqueueSnackbar("Added to watchlist", { variant: "success" })
+    } catch (error) {
+      enqueueSnackbar("Error adding to watchlist", { variant: "error" })
+    }
   }
 
   useEffect(() => {
@@ -105,16 +114,18 @@ const Details = () => {
   }, [id, user, checkIfInWatchlist])
 
   const handleRemoveFromWatchlist = async () => {
-    await removeFromWatchlist(user?.uid, id)
-    const isSetToWatchlist = await checkIfInWatchlist(user?.uid, id)
-    setIsInWatchlist(isSetToWatchlist)
+    try {
+      await removeFromWatchlist(user?.uid, id)
+      const isSetToWatchlist = await checkIfInWatchlist(user?.uid, id)
+      setIsInWatchlist(isSetToWatchlist)
+    } catch (error) {
+      enqueueSnackbar("Error removing from watchlist", { variant: "error" })
+    }
   }
 
   const title = details?.title || details?.name
   const releaseDate =
     type === "tv" ? details?.first_air_date : details?.release_date
-
-  console.log("details", details)
 
   if (loading) {
     return (

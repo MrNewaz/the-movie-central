@@ -5,7 +5,6 @@ import { Link } from "react-router-dom"
 import { imagePosterPath } from "../../services/api"
 
 const PopularCard = ({ item, index }) => {
-  console.log(item)
   return (
     <Box
       component={Link}

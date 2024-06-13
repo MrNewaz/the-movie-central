@@ -6,19 +6,23 @@ import {
 } from "@mui/icons-material"
 import { Button, Chip, Container, Grid, Typography } from "@mui/material"
 import Box from "@mui/material/Box"
+import { useSnackbar } from "notistack"
 import { useEffect, useState } from "react"
 import { imagePath } from "../../services/api"
 import { useFirestore } from "../../services/firestore"
 import idToGenre from "../../utils/idToGenre"
 
 const HeroSlide = ({ item, user }) => {
+  const { enqueueSnackbar } = useSnackbar()
   const [isInWatchlist, setIsInWatchlist] = useState(false)
   const { addToWatchlist, checkIfInWatchlist, removeFromWatchlist } =
     useFirestore()
 
   const handleSaveToWatchlist = async () => {
     if (!user) {
-      console.log("Please login to add to watchlist")
+      enqueueSnackbar("Please sign in to add to watchlist", {
+        variant: "error",
+      })
       return
     }
 
@@ -33,15 +37,25 @@ const HeroSlide = ({ item, user }) => {
     }
 
     const dataId = item?.id?.toString()
-    await addToWatchlist(user?.uid, dataId, data)
-    const isSetToWatchlist = await checkIfInWatchlist(user?.uid, dataId)
-    setIsInWatchlist(isSetToWatchlist)
+    try {
+      await addToWatchlist(user?.uid, dataId, data)
+      const isSetToWatchlist = await checkIfInWatchlist(user?.uid, dataId)
+      setIsInWatchlist(isSetToWatchlist)
+      enqueueSnackbar("Added to watchlist", { variant: "success" })
+    } catch (error) {
+      enqueueSnackbar("Error adding to watchlist", { variant: "error" })
+    }
   }
 
   const handleRemoveFromWatchlist = async () => {
-    await removeFromWatchlist(user?.uid, item.id)
-    const isSetToWatchlist = await checkIfInWatchlist(user?.uid, item.id)
-    setIsInWatchlist(isSetToWatchlist)
+    try {
+      await removeFromWatchlist(user?.uid, item.id)
+      const isSetToWatchlist = await checkIfInWatchlist(user?.uid, item.id)
+      setIsInWatchlist(isSetToWatchlist)
+      enqueueSnackbar("Removed from watchlist", { variant: "success" })
+    } catch (error) {
+      enqueueSnackbar("Error removing from watchlist", { variant: "error" })
+    }
   }
 
   useEffect(() => {
@@ -55,7 +69,7 @@ const HeroSlide = ({ item, user }) => {
     })
   }, [item, user, checkIfInWatchlist])
 
-  console.log("item", item)
+ 
   return (
     <Box sx={{ height: "100vh" }}>
       <Box

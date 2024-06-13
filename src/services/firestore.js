@@ -7,40 +7,41 @@ import {
   getDocs,
   setDoc,
 } from "firebase/firestore"
+import { useSnackbar } from "notistack"
 import { useCallback } from "react"
 import { db } from "../services/firebase"
 
 export const useFirestore = () => {
+  const { enqueueSnackbar } = useSnackbar()
   const addDocument = async (collectionName, data) => {
     // Add a new document with a generated id.
-    const docRef = await addDoc(collection(db, collectionName), data)
-    console.log("Document written with ID: ", docRef.id)
+    await addDoc(collection(db, collectionName), data)
   }
 
   const addToWatchlist = async (userId, dataId, data) => {
     try {
       if (await checkIfInWatchlist(userId, dataId)) {
-        // Todo: Alert
+        enqueueSnackbar("Already in watchlist", { variant: "error" })
         return false
       }
       await setDoc(doc(db, "users", userId, "watchlist", dataId), data)
-      // Todo: Alert
+      enqueueSnackbar("Added to watchlist", { variant: "success" })
     } catch (error) {
       console.log(error, "Error adding document")
-      // Todo: Alert
+      enqueueSnackbar("Error adding to watchlist", { variant: "error" })
     }
   }
   const addToFavouriteList = async (userId, dataId, data) => {
     try {
       if (await checkIfInFavouriteList(userId, dataId)) {
-        // Todo: Alert
+        enqueueSnackbar("Already in favourite list", { variant: "error" })
         return false
       }
       await setDoc(doc(db, "users", userId, "favouriteList", dataId), data)
-      // Todo: Alert
+      enqueueSnackbar("Added to favourite list", { variant: "success" })
     } catch (error) {
       console.log(error, "Error adding document")
-      // Todo: Alert
+      enqueueSnackbar("Error adding to favourite list", { variant: "error" })
     }
   }
 
@@ -83,10 +84,10 @@ export const useFirestore = () => {
       await deleteDoc(
         doc(db, "users", userId?.toString(), "watchlist", dataId?.toString())
       )
-      // Todo: Alert
+      enqueueSnackbar("Removed from watchlist", { variant: "success" })
     } catch (error) {
-      // Todo: Alert
       console.log(error, "Error while deleting doc")
+      enqueueSnackbar("Error removing from watchlist", { variant: "error" })
     }
   }
 
@@ -101,10 +102,12 @@ export const useFirestore = () => {
           dataId?.toString()
         )
       )
-      // Todo: Alert
+      enqueueSnackbar("Removed from favourite list", { variant: "success" })
     } catch (error) {
-      // Todo: Alert
       console.log(error, "Error while deleting doc")
+      enqueueSnackbar("Error removing from favourite list", {
+        variant: "error",
+      })
     }
   }
 

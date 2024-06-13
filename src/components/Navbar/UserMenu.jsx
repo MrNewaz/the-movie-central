@@ -14,8 +14,6 @@ export default function UserMenu({ user, logout }) {
     setAnchorEl(null)
   }
 
-  console.log(user)
-
   return (
     <div>
       <Tooltip title={user?.displayName || user?.email}>

@@ -9,10 +9,12 @@ import "./styles.css"
 import { Box, Typography } from "@mui/material"
 import { useEffect, useState } from "react"
 
+import { useSnackbar } from "notistack"
 import { useFirestore } from "../../services/firestore"
 import WatchlistCard from "./WatchlistCard"
 
 export default function WatchListComponent({ uid }) {
+  const { enqueueSnackbar } = useSnackbar()
   const { getWatchlist } = useFirestore()
 
   const [watchlist, setWatchlist] = useState([])
@@ -22,10 +24,9 @@ export default function WatchListComponent({ uid }) {
     getWatchlist(uid)
       .then((data) => {
         setWatchlist(data)
-        console.log(data, "data")
       })
       .catch((err) => {
-        console.log(err, "error")
+        enqueueSnackbar(`Error fetching watchlist: ${err}`, { variant: "error" })
       })
       .finally(() => {
         setIsLoading(false)

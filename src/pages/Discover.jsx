@@ -8,12 +8,14 @@ import {
 } from "@mui/material"
 import Box from "@mui/material/Box"
 import Typography from "@mui/material/Typography"
+import { useSnackbar } from "notistack"
 import { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
 import CommonCard from "../components/Common/CommonCard"
 import { fetchDiscover } from "../services/api"
 
 const Discover = () => {
+  const { enqueueSnackbar } = useSnackbar()
   const [data, setData] = useState([])
   const [activePage, setActivePage] = useState(1)
   const [totalPages, setTotalPages] = useState(1)
@@ -24,12 +26,15 @@ const Discover = () => {
     setIsLoading(true)
     fetchDiscover(activePage, type)
       .then((res) => {
-        console.log(res, "res")
         setData(res?.results)
         setActivePage(res?.page)
         setTotalPages(res?.total_pages)
       })
-      .catch((err) => console.log(err, "err"))
+      .catch((err) =>
+        enqueueSnackbar(`Error fetching watchlist: ${err}`, {
+          variant: "error",
+        })
+      )
       .finally(() => setIsLoading(false))
   }, [activePage, type])
 
