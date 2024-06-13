@@ -8,13 +8,10 @@ import "./styles.css"
 
 import { Box, Typography } from "@mui/material"
 import { useEffect, useState } from "react"
-
-import { useSnackbar } from "notistack"
 import { useFirestore } from "../../services/firestore"
 import WatchlistCard from "./WatchlistCard"
 
 export default function WatchListComponent({ uid }) {
-  const { enqueueSnackbar } = useSnackbar()
   const { getWatchlist } = useFirestore()
 
   const [watchlist, setWatchlist] = useState([])
@@ -26,14 +23,12 @@ export default function WatchListComponent({ uid }) {
         setWatchlist(data)
       })
       .catch((err) => {
-        enqueueSnackbar(`Error fetching watchlist: ${err}`, {
-          variant: "error",
-        })
+        console.log(err)
       })
       .finally(() => {
         setIsLoading(false)
       })
-  }, [uid, getWatchlist, watchlist, enqueueSnackbar])
+  }, [uid, getWatchlist, watchlist])
 
   if (watchlist.length === 0) return null
 
