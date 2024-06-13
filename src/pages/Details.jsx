@@ -64,14 +64,14 @@ const Details = () => {
         // Set similar
         setSimilar(similarData?.results)
       } catch (error) {
-        enqueueSnackbar("Error fetching data", { variant: "error" })
+        console.log(error)
       } finally {
         setLoading(false)
       }
     }
 
     fetchData()
-  }, [type, id, enqueueSnackbar])
+  }, [type, id])
 
   const handleSaveToWatchlist = async () => {
     if (!user) {

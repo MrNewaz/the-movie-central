@@ -2,13 +2,11 @@ import { CircularProgress, Container, Grid, Typography } from "@mui/material"
 
 import { useEffect, useState } from "react"
 
-import { useSnackbar } from "notistack"
 import CommonActionCard from "../components/Common/CommonActionCard"
 import { useAuth } from "../context/useAuth"
 import { useFirestore } from "../services/firestore"
 
 const WatchList = () => {
-  const { enqueueSnackbar } = useSnackbar()
   const { getWatchlist } = useFirestore()
   const { user } = useAuth()
   const [watchlist, setWatchlist] = useState([])
@@ -21,15 +19,13 @@ const WatchList = () => {
           setWatchlist(data)
         })
         .catch((err) => {
-          enqueueSnackbar(`Error fetching watchlist: ${err}`, {
-            variant: "error",
-          })
+          console.log(err)
         })
         .finally(() => {
           setIsLoading(false)
         })
     }
-  }, [user?.uid, getWatchlist, watchlist, enqueueSnackbar])
+  }, [user?.uid, getWatchlist, watchlist])
 
   if (isLoading) {
     return (

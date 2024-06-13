@@ -9,14 +9,12 @@ import {
 import Box from "@mui/material/Box"
 import Typography from "@mui/material/Typography"
 
-import { useSnackbar } from "notistack"
 import { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
 import CommonCard from "../components/Common/CommonCard"
 import { fetchMovies } from "../services/api"
 
 const MovieReleases = () => {
-  const { enqueueSnackbar } = useSnackbar()
   const [movies, setMovies] = useState([])
   const [activePage, setActivePage] = useState(1)
   const [totalPages, setTotalPages] = useState(1)
@@ -31,13 +29,9 @@ const MovieReleases = () => {
         setActivePage(res?.page)
         setTotalPages(res?.total_pages)
       })
-      .catch((err) =>
-        enqueueSnackbar(`Error fetching watchlist: ${err}`, {
-          variant: "error",
-        })
-      )
+      .catch((err) => console.log(err))
       .finally(() => setIsLoading(false))
-  }, [activePage, sortBy, enqueueSnackbar])
+  }, [activePage, sortBy])
 
   const handleSort = (event, newType) => {
     setSortBy(newType)

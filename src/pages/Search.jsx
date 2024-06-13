@@ -10,13 +10,11 @@ import Typography from "@mui/material/Typography"
 import { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
 
-import { useSnackbar } from "notistack"
 import { useDebounce } from "use-debounce"
 import CommonCard from "../components/Common/CommonCard"
 import { searchData } from "../services/api"
 
 const Search = () => {
-  const { enqueueSnackbar } = useSnackbar()
   const [searchValue, setSearchValue] = useState("")
 
   const [activePage, setActivePage] = useState(1)
@@ -34,13 +32,9 @@ const Search = () => {
         setActivePage(res?.page)
         setTotalPages(res?.total_pages)
       })
-      .catch((err) =>
-        enqueueSnackbar(`Error fetching watchlist: ${err}`, {
-          variant: "error",
-        })
-      )
+      .catch((err) => console.log(err))
       .finally(() => setIsLoading(false))
-  }, [value, activePage, enqueueSnackbar])
+  }, [value, activePage])
 
   return (
     <Container maxWidth="xl" sx={{ py: 10 }}>

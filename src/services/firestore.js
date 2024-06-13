@@ -7,12 +7,10 @@ import {
   getDocs,
   setDoc,
 } from "firebase/firestore"
-import { useSnackbar } from "notistack"
 import { useCallback } from "react"
 import { db } from "../services/firebase"
 
 export const useFirestore = () => {
-  const { enqueueSnackbar } = useSnackbar()
   const addDocument = async (collectionName, data) => {
     // Add a new document with a generated id.
     await addDoc(collection(db, collectionName), data)
@@ -21,25 +19,21 @@ export const useFirestore = () => {
   const addToWatchlist = async (userId, dataId, data) => {
     try {
       if (await checkIfInWatchlist(userId, dataId)) {
-        enqueueSnackbar("Already in watchlist", { variant: "error" })
         return false
       }
       await setDoc(doc(db, "users", userId, "watchlist", dataId), data)
     } catch (error) {
       console.log(error, "Error adding document")
-      enqueueSnackbar("Error adding to watchlist", { variant: "error" })
     }
   }
   const addToFavouriteList = async (userId, dataId, data) => {
     try {
       if (await checkIfInFavouriteList(userId, dataId)) {
-        enqueueSnackbar("Already in favourite list", { variant: "error" })
         return false
       }
       await setDoc(doc(db, "users", userId, "favouriteList", dataId), data)
     } catch (error) {
       console.log(error, "Error adding document")
-      enqueueSnackbar("Error adding to favourite list", { variant: "error" })
     }
   }
 
@@ -84,7 +78,6 @@ export const useFirestore = () => {
       )
     } catch (error) {
       console.log(error, "Error while deleting doc")
-      enqueueSnackbar("Error removing from watchlist", { variant: "error" })
     }
   }
 
@@ -101,9 +94,6 @@ export const useFirestore = () => {
       )
     } catch (error) {
       console.log(error, "Error while deleting doc")
-      enqueueSnackbar("Error removing from favourite list", {
-        variant: "error",
-      })
     }
   }
 
