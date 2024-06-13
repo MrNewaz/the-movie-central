@@ -54,7 +54,7 @@ const CommonCard = ({ item, type }) => {
           color: "#9CA4AB",
         }}
       >
-        ⭐ {item.vote_average.toFixed(1)} |{" "}
+        ⭐ {item?.vote_average?.toFixed(1)} |{" "}
         {item?.media_type || type === "tv" ? "TV Series" : "Movie"}
       </Typography>
     </Box>
