@@ -30,14 +30,12 @@ function App() {
     },
   })
   return (
-    <>
-      <ThemeProvider theme={responsiveFontSizes(theme)}>
-        <CssBaseline />
-        <Navbar />
-        <AppRoutes />
-        <Footer />
-      </ThemeProvider>
-    </>
+    <ThemeProvider theme={responsiveFontSizes(theme)}>
+      <CssBaseline />
+      <Navbar />
+      <AppRoutes />
+      <Footer />
+    </ThemeProvider>
   )
 }
 
