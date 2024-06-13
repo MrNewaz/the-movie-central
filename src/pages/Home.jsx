@@ -2,23 +2,26 @@ import { CircularProgress, Container } from "@mui/material"
 import Box from "@mui/material/Box"
 import { useEffect, useState } from "react"
 import Hero from "../components/Hero"
+import LatestMovies from "../components/LatestMovies"
 import PopularList from "../components/PopularList"
 import { useAuth } from "../context/useAuth"
 import { fetchLatest, fetchTrending } from "../services/api"
 
 const Home = () => {
   const [trending, setTrending] = useState([])
+  const [latest, setLatest] = useState([])
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [trendingData] = await Promise.all([
+        const [trendingData, latestData] = await Promise.all([
           fetchTrending("week"),
           fetchLatest(),
         ])
 
         setTrending(trendingData)
+        setLatest(latestData)
       } catch (error) {
         console.log(error, "error")
       } finally {
@@ -51,6 +54,7 @@ const Home = () => {
       <Hero data={trending} user={user} />
       <Container maxWidth="xl">
         <PopularList data={trending} />
+        <LatestMovies data={latest} />
       </Container>
     </Box>
   )
