@@ -4,6 +4,7 @@ import { useEffect, useState } from "react"
 import Hero from "../components/Hero"
 import LatestMovies from "../components/LatestMovies"
 import PopularList from "../components/PopularList"
+import WatchListComponent from "../components/WatchList"
 import { useAuth } from "../context/useAuth"
 import { fetchLatest, fetchTrending } from "../services/api"
 
@@ -55,6 +56,7 @@ const Home = () => {
       <Container maxWidth="xl">
         <PopularList data={trending} />
         <LatestMovies data={latest} />
+        {user?.uid ? <WatchListComponent uid={user.uid} /> : null}
       </Container>
     </Box>
   )

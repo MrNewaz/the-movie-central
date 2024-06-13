@@ -1,0 +1,27 @@
+.swiper {
+  width: 100%;
+  height: 100%;
+}
+
+.swiper-button-prev,
+.swiper-button-next {
+  color: #fff;
+  background-color: #28262d;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 30px;
+}
+
+.swiper-button-next.swiper-button-disabled,
+.swiper-button-prev.swiper-button-disabled {
+  opacity: 0;
+}
+
+.swiper-button-next::after,
+.swiper-button-prev::after {
+  font-family: "swiper-icons";
+  font-size: 12px;
+  font-weight: 400;
+}
